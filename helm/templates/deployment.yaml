@@ -68,7 +68,7 @@ spec:
         command:
         - /cloud_sql_proxy
         - --dir=/cloudsql
-        - -instances={{ .Values.config.postgresql_connection_string }}
+        - -instances={{ .Values.deployment.postgresql_connection_string }}
         - -credential_file=/secrets/cloudsql/credentials.json
         image: gcr.io/cloudsql-docker/gce-proxy:1.11
         imagePullPolicy: IfNotPresent
