@@ -8,9 +8,6 @@ steps:
 - id: push-docker-images
   name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'us.gcr.io/docai-neuron/doc.ai/accent']
-- id: get-values-yaml
-  name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', 'gs://docai-helm-values/accent/${_VALUES_FILE}', 'helm/values.yaml']
 - name: 'gcr.io/docai-neuron/helm'
   id: helm-upgrade
   env:
