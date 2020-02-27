@@ -28,5 +28,6 @@ steps:
   - 'deployment.docker_tag=sha-$SHORT_SHA'
   - 'accent'
   - 'helm/'
+options:
+  machineType: 'N1_HIGHCPU_8'
 timeout: 1200s
-machineType: 'N1_HIGHCPU_8'
