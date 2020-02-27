@@ -1,0 +1,49 @@
+name: accent
+deployment:
+  replicas: 1
+  docker_tag: latest
+  postgresql_connection_string: doc-ai-infra-sec:us-central1:accent=tcp:3306
+  liveness_probe: false
+  readiness_probe: false
+  # env variables to be loaded from secrets should be entered below
+  # use the format:
+  # ENV_VAR_NAME:
+  #   key: KEY_NAME
+  #   name: SECRET_NAME
+  secretEnv:
+    GOOGLE_ENABLED:
+      key: enabled
+      name: accent-google-oauth
+    GOOGLE_LOGIN_ENABLED:
+      key: login_enabled
+      name: accent-google-oauth
+    GOOGLE_API_REDIRECT_URL:
+      key: redirect_url
+      name: accent-google-oauth
+    GOOGLE_API_CLIENT_ID:
+      key: client_id
+      name: accent-google-oauth
+    GOOGLE_API_CLIENT_SECRET:
+      key: client_secret
+      name: accent-google-oauth
+    RESTRICTED_DOMAIN:
+      key: domain
+      name: accent-google-oauth
+
+  # env variable to be loaded
+  # use the format:
+  # ENV_VAR_NAME: ENV_VAR_VALUE
+  env:
+    WEBAPP_URL: https://accent.docai.beer
+    DATABASE_URL: postgresql://127.0.0.1/accent
+
+
+service:
+  port: 3000
+  targetport: 3000
+  ambassador:
+    enabled: true
+    host: accent.docai.beer
+
+
+
