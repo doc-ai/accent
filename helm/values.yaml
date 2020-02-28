@@ -29,13 +29,16 @@ deployment:
     RESTRICTED_DOMAIN:
       key: domain
       name: accent-google-oauth
+    DATABASE_URL:
+      key: postgresql_connection_string
+      name: accent-postgresql
 
   # env variable to be loaded
   # use the format:
   # ENV_VAR_NAME: ENV_VAR_VALUE
   env:
     WEBAPP_URL: https://accent.docai.beer
-    DATABASE_URL: postgresql://127.0.0.1/accent
+    FORCE_SSL: true
 
 
 service:
