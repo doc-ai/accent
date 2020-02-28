@@ -42,8 +42,8 @@ deployment:
 
 
 service:
-  port: 3000
-  targetport: 3000
+  port: 4000
+  targetport: 4000
   ambassador:
     enabled: true
     host: accent.docai.beer
