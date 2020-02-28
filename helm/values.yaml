@@ -2,7 +2,7 @@ name: accent
 deployment:
   replicas: 1
   docker_tag: latest
-  postgresql_connection_string: doc-ai-infra-sec:us-central1:accent=tcp:3306
+  postgresql_connection_string: doc-ai-infra-sec:us-central1:accent=tcp:5432
   liveness_probe: false
   readiness_probe: false
   # env variables to be loaded from secrets should be entered below
