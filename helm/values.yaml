@@ -39,7 +39,7 @@ deployment:
   env:
     WEBAPP_URL: https://accent.docai.beer
     FORCE_SSL: true
-    DUMMY_LOGIN: false
+    DUMMY_LOGIN_ENABLED: false
 
 
 service:
