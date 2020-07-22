@@ -1,0 +1,30 @@
+steps:
+- id: build-image
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us.gcr.io/docai-neuron/doc.ai/accent:latest', '-f', 'Dockerfile', '.']
+- id: tag-image
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'us.gcr.io/docai-neuron/doc.ai/accent:latest', 'us.gcr.io/docai-neuron/doc.ai/accent:sha-$SHORT_SHA']
+- id: push-docker-images
+  name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us.gcr.io/docai-neuron/doc.ai/accent']
+- name: 'gcr.io/docai-neuron/helm'
+  id: helm-upgrade
+  env:
+  - 'CLOUDSDK_CORE_PROJECT=${_CLOUDSDK_CORE_PROJECT}'
+  - 'CLOUDSDK_COMPUTE_ZONE=${_CLOUDSDK_COMPUTE_ZONE}'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=${_CLOUDSDK_CONTAINER_CLUSTER}'
+  args:
+  - 'upgrade'
+  - '--install'
+  - '--recreate-pods'
+  - '--reset-values'
+  - '-f'
+  - 'helm/values.yaml'
+  - '--set'
+  - 'deployment.docker_tag=sha-$SHORT_SHA'
+  - 'accent'
+  - 'helm/'
+options:
+  machineType: 'N1_HIGHCPU_8'
+timeout: 1200s

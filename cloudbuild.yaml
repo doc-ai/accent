@@ -1,0 +1,6 @@
+# dummy QA test
+steps:
+- name: 'alpine'
+  args:
+  - sleep
+  - 1

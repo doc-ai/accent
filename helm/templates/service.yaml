@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Service
+metadata:
+  {{- if .Values.service.ambassador.enabled }}
+  annotations:
+    getambassador.io/config: |
+      apiVersion: ambassador/v1
+      kind:  Mapping
+      name:  {{ .Values.name }}_mapping
+      prefix: /
+      host: {{ .Values.service.ambassador.host }}
+      host_regex: false
+      service: {{ .Values.name }}.{{ .Release.Namespace }}:{{ .Values.service.port }}
+      timeout_ms: 60000
+      cors:
+        exposed_headers: x-test-static
+      add_response_headers:
+        Content-Security-Policy: "frame-ancestors 'none'"
+        Strict-Transport-Security: max-age=31536000;
+        X-Frame-Options: deny
+        X-XSS-Protection: 1; mode=block
+        Referrer-Policy: strict-origin-when-cross-origin
+        Feature-Policy: "geolocation 'self'; camera 'self'"
+        X-Content-Type-Options: nosniff
+  {{- end }}
+  name: {{ .Values.name }}
+spec:
+  ports:
+  - port: {{ .Values.service.port }}
+    protocol: TCP
+    targetPort: {{ .Values.service.targetport }}
+  selector:
+    app: {{ .Values.name }}
+  sessionAffinity: None
+  type: ClusterIP
