@@ -11,6 +11,12 @@
   font-size: 12px;
 }
 
+.label {
+  display: flex;
+  align-items: center;
+}
+
 .label-text {
-  color: $color-grey;
+  margin-left: 4px;
+  color: var(--color-grey);
 }

@@ -3,39 +3,41 @@
 'use strict';
 
 // eslint-disable-next-line complexity
-module.exports = function(environment) {
+module.exports = function (environment) {
   const wsHost = process.env.API_WS_HOST || '__API_WS_HOST__';
   const host = process.env.API_HOST || '__API_HOST__';
   const sentryDsn =
-    process.env.NODE_ENV === 'prod'
+    process.env.NODE_ENV === 'production'
       ? process.env.WEBAPP_SENTRY_DSN || '__WEBAPP_SENTRY_DSN__'
       : process.env.WEBAPP_SENTRY_DSN;
 
   const ENV = {
+    version: '__VERSION__',
     modulePrefix: 'accent-webapp',
     podModulePrefix: 'accent-webapp/pods',
     environment,
     rootURL: '/',
-    locationType: 'auto'
+    locationType: 'auto',
   };
 
   ENV.SENTRY = {
-    DSN: sentryDsn
+    DSN: sentryDsn,
   };
 
   ENV.EmberENV = {
     EXTEND_PROTOTYPES: false,
-    LOG_VERSION: false
+    LOG_VERSION: false,
   };
 
   ENV.APP = {
     LOCAL_STORAGE: {
-      SESSION_NAMESPACE: 'accent-session'
-    }
+      SESSION_NAMESPACE: 'accent-session',
+    },
   };
 
   ENV.API = {
     WS_HOST: wsHost,
+    WS_ENABLED: true,
     HOST: host,
     AUTHENTICATION_PATH: `${host}/auth`,
     HOOKS_PATH: `${host}/hooks/{0}?project_id={1}&authorization={2}`,
@@ -47,7 +49,7 @@ module.exports = function(environment) {
     EXPORT_DOCUMENT: `${host}/export`,
     JIPT_EXPORT_DOCUMENT: `${host}/jipt-export`,
     PERCENTAGE_REVIEWED_BADGE_SVG_PROJECT_PATH: `${host}/{0}/percentage_reviewed_badge.svg`,
-    JIPT_SCRIPT_PATH: `${host}/static/jipt/index.js`
+    JIPT_SCRIPT_PATH: `${host}/static/jipt/index.js`,
   };
 
   ENV.contentSecurityPolicy = {
@@ -56,10 +58,10 @@ module.exports = function(environment) {
       "'self' 'unsafe-inline' 'unsafe-eval' apis.google.com cdn.ravenjs.com",
     'font-src': "'self'",
     'connect-src': `'self' ${wsHost} ${host} https://www.googleapis.com https://sentry.io`,
-    'img-src': '*',
+    'img-src': '* data:',
     'style-src': "'self' 'unsafe-inline'",
     'media-src': "'self'",
-    'frame-src': 'accounts.google.com'
+    'frame-src': 'accounts.google.com',
   };
 
   ENV.flashMessageDefaults = {
@@ -73,7 +75,7 @@ module.exports = function(environment) {
     // service defaults
     type: 'info',
     types: ['info', 'success', 'error', 'socket'],
-    injectionFactories: []
+    injectionFactories: [],
   };
 
   if (environment === 'test') {
@@ -84,6 +86,9 @@ module.exports = function(environment) {
 
     ENV.APP.rootElement = '#ember-testing';
     ENV.APP.autoboot = false;
+
+    ENV.API.HOST = 'fake/endpoint';
+    ENV.API.WS_ENABLED = false;
 
     ENV.APP.LOCAL_STORAGE.SESSION_NAMESPACE = 'accent-session-test';
   }

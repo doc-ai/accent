@@ -1,4 +1,4 @@
-& {
+.operations-peek-item {
   margin-bottom: 15px;
 }
 
@@ -15,8 +15,8 @@
 .languageHeader-displayOptions-button {
   padding: 0 10px;
   background: none;
-  border-right: 1px solid $color-border;
-  color: $color-grey;
+  border-right: 1px solid var(--background-light-highlight);
+  color: var(--color-grey);
   font-size: 13px;
 
   &:focus {
@@ -30,15 +30,14 @@
 }
 
 .languageHeader-displayOptions-button[disabled] {
-  color: $color-green;
   color: var(--color-primary);
 }
 
 .statsList,
 .operationsList {
   margin: 10px 0;
-  background: #fff;
-  box-shadow: 0 2px 10px rgba($color-black, 0.06);
+  background: var(--body-background);
+  box-shadow: 0 2px 10px var(--shadow-color);
 }
 
 .stat {
@@ -69,7 +68,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  background: $color-light-background;
+  background: var(--background-light);
 }
 
 .operation-content {
@@ -78,11 +77,12 @@
 
 .operation-action {
   font-size: 12px;
-  color: $color-grey;
+  color: var(--color-grey);
 }
 
 .operation-key {
-  @extend %translationKeyBase;
+  word-break: break-all;
+  font-family: var(--font-monospace);
   font-size: 11px;
 }
 
@@ -101,5 +101,5 @@
   padding: 20px 10px;
   font-style: italic;
   font-size: 12px;
-  color: $color-grey;
+  color: var(--color-grey);
 }

@@ -26,7 +26,10 @@ run() {
 }
 
 header "API tests…"
-run mix test
+run make test-api
+
+header "Webapp tests…"
+run make test-webapp
 
 header "Compilation without warnings…"
 run make lint-compile
@@ -43,8 +46,11 @@ run make lint-prettier
 header "Eslint code lint…"
 run make lint-eslint
 
-header "Tslint code lint…"
-run make lint-tslint
+header "Handlebar template code lint…"
+run make lint-template-hbs
+
+header "Type check Typescript files…"
+run make type-check
 
 if [ ${error_status} -ne 0 ]; then
   echo "\n\n${YELLOW}▶▶ One of the checks ${RED_BOLD}failed${YELLOW}. Please fix it before committing.${NO_COLOR}"

@@ -12,12 +12,18 @@ interface Translation {
   window nodes on mutation and messages FROM the Accent client.
 */
 export default class Mutation {
-  static nodeChange(node: Element, meta: any, text: string) {
+  private readonly liveNode: LiveNode;
+
+  constructor(liveNode: LiveNode) {
+    this.liveNode = liveNode;
+  }
+
+  static nodeChange(node: HTMLElement, meta: any, text: string) {
     this.textNodeChange(node, meta, text);
     this.attributeNodeChange(node, meta, text);
   }
 
-  static nodeStyleRefresh(node: Element, translation: Translation) {
+  static nodeStyleRefresh(node: HTMLElement, translation: Translation) {
     node.removeAttribute('class');
 
     if (translation.isConflicted) {
@@ -27,7 +33,7 @@ export default class Mutation {
     }
   }
 
-  private static textNodeChange(node: Element, meta: any, text: string) {
+  private static textNodeChange(node: HTMLElement, meta: any, text: string) {
     if (node.innerHTML === text) return;
     let updatedText = text;
 
@@ -38,7 +44,11 @@ export default class Mutation {
     if (!meta.head) this.handleUpdatedNodeStyles(node);
   }
 
-  private static attributeNodeChange(node, meta, text) {
+  private static attributeNodeChange(
+    node: HTMLElement,
+    meta: any,
+    text: string
+  ) {
     if (!meta.attributeName) return;
     if (node.getAttribute(meta.attributeName) === text) return;
 
@@ -55,12 +65,6 @@ export default class Mutation {
     }, NODE_UPDATE_STYLE_TIMEOUT);
   }
 
-  private readonly liveNode: LiveNode;
-
-  constructor(liveNode: LiveNode) {
-    this.liveNode = liveNode;
-  }
-
   bindEvents() {
     const onMutation = (instance: MutationRecord[]) => {
       return instance.forEach(this.handleNodeMutation.bind(this));
@@ -71,14 +75,16 @@ export default class Mutation {
       characterData: true,
       characterDataOldValue: true,
       childList: true,
-      subtree: true
+      subtree: true,
     });
   }
 
   handleNodeMutation(node) {
     if (node.nodeType === Node.TEXT_NODE) this.liveNode.matchText(node.target);
     if (node.type === 'childList') {
-      node.addedNodes.forEach((node: Element) => this.liveNode.evaluate(node));
+      node.addedNodes.forEach((node: HTMLElement) =>
+        this.liveNode.evaluate(node)
+      );
     }
     if (node.type === 'attributes') this.liveNode.matchAttributes(node.target);
     if (node.type === 'characterData') this.liveNode.matchText(node.target);

@@ -1,4 +1,4 @@
-& {
+.project-navigation {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
@@ -35,8 +35,8 @@
   }
 }
 
-@media (max-width: ($screen-sm)) {
-  & {
+@media (max-width: var(--screen-sm)) {
+  .project-navigation {
     flex-direction: row;
     width: 100%;
     padding-left: 15px;

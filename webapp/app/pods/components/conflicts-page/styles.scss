@@ -1,8 +1,8 @@
-& {
-  background: #fff;
+.conflicts-page {
+  background: var(--body-background);
 }
 
-&.fullscreen {
+.conflicts-page.fullscreen {
   z-index: 200;
   position: fixed;
   top: 0;

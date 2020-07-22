@@ -1,32 +1,37 @@
 <div>
-  <ProjectsHeader @session={{session}} @project={{project}} />
+  <ProjectsHeader @session={{this.session}} @project={{this.project}} />
   <style>
-    body {
+    html body {
     {{{this.colors}}}
+    }
+    html[data-theme='dark'] body {
+    {{{this.darkColors}}}
     }
   </style>
 
-  <div class="wrapper">
-    <div class="wrapper-sidebar">
-      {{#if model.loading}}
-        <SkeletonUi::ProjectNavigation />
-      {{else if showError}}
-        <SkeletonUi::ProjectNavigation />
-      {{else}}
-        <ProjectNavigation
-          @project={{project}}
-          @permissions={{permissions}}
-          @revisions={{revisions}}
-        />
-      {{/if}}
-    </div>
+  <AccWrapper>
+    {{#unless this.showError}}
+      <AccWrapper::Sidebar>
+        {{#if this.model.loading}}
+          <SkeletonUi::ProjectNavigation />
+        {{else if this.showError}}
+          <SkeletonUi::ProjectNavigation />
+        {{else}}
+          <ProjectNavigation
+            @project={{this.project}}
+            @permissions={{this.permissions}}
+            @revisions={{this.revisions}}
+          />
+        {{/if}}
+      </AccWrapper::Sidebar>
+    {{/unless}}
 
-    <div class="wrapper-content">
-      {{#unless model.loading}}
-        <PhoenixChannelListener @project={{project}} />
+    <AccWrapper::Content>
+      {{#unless this.model.loading}}
+        <PhoenixChannelListener @project={{this.project}} />
       {{/unless}}
 
-      {{#if showError}}
+      {{#if this.showError}}
         <ErrorSection
           @status={{t "pods.error.unauthorized.status"}}
           @title={{t "pods.error.unauthorized.title"}}
@@ -36,7 +41,8 @@
       {{else}}
         {{outlet}}
       {{/if}}
-    </div>
-  </div>
+    </AccWrapper::Content>
+  </AccWrapper>
 </div>
+
 <ApplicationFooter />

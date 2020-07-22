@@ -1,4 +1,4 @@
-& {
+.project-navigation-list {
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -18,19 +18,21 @@
   align-items: center;
   position: relative;
   left: 1px;
-  transition: $transition-speed $transition-easing;
-  transition-property: color, background;
+  transition: 0.2s ease-in-out;
+  transition-property: color, opacity, background;
   padding: 8px 12px;
   margin-bottom: 10px;
   text-decoration: none;
   font-weight: 600;
   font-size: 13px;
   border-radius: 3px;
-  color: $color-grey;
+  color: var(--color-black);
+  opacity: 0.6;
 
   &:hover,
   &:focus {
-    background: $color-light-background;
+    opacity: 1;
+    background: var(--background-light);
     color: var(--color-primary);
 
     .list-item-link-icon {
@@ -42,8 +44,8 @@
     }
   }
 
-  &.active {
-    background: lighten($color-green, 46%);
+  &:global(.active) {
+    opacity: 1;
     background: var(--color-primary);
     color: #fff;
 
@@ -60,13 +62,13 @@
 .list-item-link-text {
   width: 127px;
   padding: 0 0 0 12px;
-  color: $color-grey;
-  transition: $transition-speed $transition-easing;
+  color: var(--color-black);
+  transition: 0.2s ease-in-out;
   transition-property: color;
 }
 
 .list-item-link-icon {
-  transition: $transition-speed $transition-easing;
+  transition: 0.2s ease-in-out;
   transition-property: fill;
   display: inline-block;
   width: 19px;
@@ -79,8 +81,8 @@
   }
 }
 
-@media (max-width: ($screen-sm)) {
-  & {
+@media (max-width: var(--screen-sm)) {
+  .project-navigation-list {
     flex-direction: row;
     justify-content: space-between;
     margin-left: 0;

@@ -1,23 +1,20 @@
-& {
-  transition: $transition-speed $transition-easing;
-  transition-property: background, border-color, transform;
+.conflict-item {
+  transition: 0.2s ease-in-out;
+  transition-property: background, border-color;
   padding: 10px;
   margin-bottom: 15px;
+  border: 1px solid transparent;
+  border-radius: 3px;
 
   &:nth-child(even) {
-    background: $color-light-background;
+    background: var(--background-light);
   }
 
+  &.active,
   &:focus,
   &:hover {
-    border-color: lighten($color-green, 40%);
-    border-color: var(--color-primary-opacity-10);
-    background: $color-light-background;
-  }
-
-  &.active {
-    background: $color-light-background;
-    transform: scale(1.02);
+    border-color: var(--background-light-highlight);
+    background: var(--background-light);
   }
 }
 
@@ -25,7 +22,7 @@
   position: relative;
 }
 
-&.fullscreen {
+.conflict-item.fullscreen {
   .item-details {
     display: flex;
     align-items: stretch;
@@ -43,35 +40,37 @@
   }
 }
 
-&[class*='resolved'] {
+.conflict-item.resolved {
   padding: 5px 10px;
   margin: 5px 0 15px;
-  background: lighten($color-green, 48%);
-  background: var(--color-primary-opacity-10);
-  box-shadow: 0 1px 5px lighten($color-grey, 25%);
+  border: 1px solid var(--color-green);
+  background: hsl(
+    var(--color-green-hue),
+    var(--color-green-saturation),
+    var(--color-highlight-lighteness)
+  );
 
   .item-key-prefix {
-    color: rgba($color-green, 0.7);
-    color: var(--color-primary-opacity-70);
+    opacity: 0.7;
+    color: var(--color-green);
   }
 
   .item-key {
     font-size: 12px;
-    color: $color-green;
-    color: var(--color-primary);
+    color: var(--color-green);
   }
 }
 
-&[class*='errored'] {
+.conflict-item.errored {
   .textInput {
-    border-color: lighten($color-error, 30%);
+    border-color: var(--color-error);
   }
 }
 
 .error {
   font-size: 12px;
   font-weight: bold;
-  color: $color-error;
+  color: var(--color-error);
 }
 
 .item-key-prefix {
@@ -83,13 +82,15 @@
 
 .item-key {
   display: block;
-  @extend %translationKeyBase;
-  transition: $transition-speed $transition-easing;
+  font-family: var(--font-monospace);
+  word-break: break-all;
+  transition: 0.2s ease-in-out;
   transition-property: color;
   margin-right: 15px;
   line-height: 1.5;
   font-size: 12px;
   font-weight: bold;
+  color: var(--color-primary);
 }
 
 .key {
@@ -111,9 +112,14 @@
 }
 
 .correctButton {
-  position: absolute;
-  top: 6px;
-  right: 15px;
+  position: absolute !important;
+  top: -10px !important;
+  right: 15px !important;
+  padding: 0 !important;
+}
+
+.conflict-item.active .correctButton {
+  top: 6px !important;
 }
 
 .textDiff,
@@ -121,36 +127,24 @@
 .conflictedText-textReference {
   padding: 8px 0;
   font-size: 13px;
-  color: darken($color-grey, 15%);
+  color: var(--color-grey);
 }
 
 .textDiff {
-  border-top: 1px dashed lighten($color-grey, 20%);
+  border-top: 1px dashed;
+  border-color: var(--background-light-highlight);
   white-space: pre-wrap;
-
-  .added {
-    padding: 0 3px;
-    background: lighten($color-success, 42%);
-    color: darken($color-success, 10%);
-  }
-
-  .removed {
-    padding: 0 3px;
-    background: lighten($color-error, 42%);
-    color: $color-error;
-    text-decoration: line-through;
-  }
 }
 
 .textConflicted {
   font-size: 11px;
-  color: lighten($color-grey, 5%);
+  color: var(--color-grey);
 }
 
 .textConflicted-empty {
   font-size: 11px;
   font-style: italic;
-  color: lighten($color-grey, 10%);
+  color: var(--color-grey);
 }
 
 .textConflicted-content {
@@ -159,14 +153,14 @@
 
 .conflictedText-textReference-link {
   margin-right: 4px;
-  color: rgba($color-black, 0.7);
+  opacity: 0.7;
+  color: var(--color-black);
   text-decoration: none;
   font-weight: normal;
   font-size: 12px;
 
   &:focus,
   &:hover {
-    color: $color-green;
     color: var(--color-primary);
   }
 }
@@ -174,7 +168,7 @@
 .conflictedText-textReference {
   display: flex;
   flex-direction: column;
-  border-top: 1px dashed #eee;
+  border-top: 1px dashed var(--background-light-highlight);
 }
 
 .conflictedText-textReference-language {
@@ -187,7 +181,7 @@
   font-size: 11px;
   font-style: italic;
   font-weight: normal;
-  color: lighten($color-grey, 10%);
+  color: var(--color-grey);
 }
 
 .conflictedText-textReference-text-content {
@@ -202,4 +196,19 @@
   flex-shrink: 0;
   width: 100%;
   margin: 0 0 5px;
+}
+
+.item-text {
+  display: block;
+  color: var(--input-color);
+  font-family: var(--font-monospace);
+  line-height: 1.4;
+  padding: 0 180px 0 0;
+  font-size: 12px;
+  line-height: 1.6;
+
+  &:focus {
+    outline: none;
+    opacity: 0.8;
+  }
 }

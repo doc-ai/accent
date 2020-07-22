@@ -16,6 +16,11 @@ defmodule Accent.GraphQL.Types.Project do
     field(:main_color, :string)
     field(:last_synced_at, :datetime)
     field(:logo, :string)
+
+    field(:translations_count, non_null(:integer))
+    field(:conflicts_count, non_null(:integer))
+    field(:reviewed_count, non_null(:integer))
+
     field(:last_activity, :activity, resolve: &Accent.GraphQL.Resolvers.Project.last_activity/3)
     field(:is_file_operations_locked, non_null(:boolean), resolve: field_alias(:locked_file_operations))
 
@@ -42,6 +47,7 @@ defmodule Accent.GraphQL.Types.Project do
 
     field :documents, :documents do
       arg(:page, :integer)
+      arg(:page_size, :integer)
 
       resolve(project_authorize(:index_documents, &Accent.GraphQL.Resolvers.Document.list_project/3))
     end
@@ -58,6 +64,7 @@ defmodule Accent.GraphQL.Types.Project do
 
     field :comments, :comments do
       arg(:page, :integer)
+      arg(:page_size, :integer)
 
       resolve(project_authorize(:index_comments, &Accent.GraphQL.Resolvers.Comment.list_project/3))
     end

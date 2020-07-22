@@ -1,42 +1,47 @@
-& {
+.flash {
   position: relative;
   margin-bottom: 10px;
   width: 400px;
   background: #fff;
   border-radius: 3px;
-  box-shadow: 0 1px 12px rgba(#000, 0.1);
+  box-shadow: 0 1px 12px var(--shadow-color);
   text-shadow: 0 1px 1px rgba(#000, 0.1);
   color: #fff;
   font-weight: bold;
-  animation: 0.3s flash-message-in ease;
+  animation: 0.3s ease;
+  animation-name: flash-message-in;
   pointer-events: all;
 
   &.is-exiting {
-    animation: 0.3s flash-message-out forwards ease-in-out;
+    animation: 0.3s forwards ease-in-out;
+    animation-name: flash-message-out;
   }
 }
 
-&.success {
-  background: $color-green;
+.flash.success {
+  background: var(--color-green);
 
   .icon {
-    stroke: lighten($color-green, 35%);
+    opacity: 0.7;
+    stroke: var(--color-green);
   }
 }
 
-&.socket {
-  background: $color-socket;
+.flash.socket {
+  background: var(--color-socket);
 
   .icon {
-    stroke: lighten($color-socket, 35%);
+    opacity: 0.7;
+    stroke: var(--color-socket);
   }
 }
 
-&.error {
-  background: $color-error;
+.flash.error {
+  background: var(--color-error);
 
   .icon {
-    stroke: lighten($color-error, 35%);
+    opacity: 0.7;
+    stroke: var(--color-error);
   }
 }
 

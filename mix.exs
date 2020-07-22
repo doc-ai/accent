@@ -1,7 +1,7 @@
 defmodule Accent.Mixfile do
   use Mix.Project
 
-  @version "1.4.3"
+  @version "1.5.6"
 
   def project do
     [
@@ -71,7 +71,7 @@ defmodule Accent.Mixfile do
       {:gettext, "~> 0.17"},
       {:csv, "~> 2.0"},
       {:php_assoc_map, "~> 0.5"},
-      {:jason, "~> 1.0"},
+      {:jason, "~> 1.2", override: true},
       {:erlsom, "~> 1.5"},
       {:xml_builder, "~> 2.0"},
       {:ex_minimatch, "~> 0.0.1"},
@@ -82,7 +82,7 @@ defmodule Accent.Mixfile do
       {:ueberauth_google, "~> 0.6"},
       {:ueberauth_github, "~> 0.7"},
       {:ueberauth_slack, github: "ueberauth/ueberauth_slack", ref: "525594c870f959ab"},
-      {:ueberauth_discord, "~> 0.4.0"},
+      {:ueberauth_discord, "~> 0.5"},
 
       # Errors
       {:sentry, "~> 7.0"},
@@ -92,14 +92,14 @@ defmodule Accent.Mixfile do
       {:bamboo_smtp, "~> 2.0"},
 
       # Events handling
-      {:gen_stage, "~> 0.11"},
+      {:gen_stage, "~> 1.0"},
 
       # Mock testing
       {:mox, "~> 0.3", only: :test},
       {:mock, "~> 0.3.0", only: :test},
 
       # Dev
-      {:dialyxir, "~> 0.5", only: ~w(dev test)a, runtime: false},
+      {:dialyxir, "~> 1.0", only: ~w(dev test)a, runtime: false},
       {:credo, ">= 0.0.0", only: ~w(dev test)a},
       {:credo_envvar, "~> 0.1.0", only: ~w(dev test)a, runtime: false},
       {:excoveralls, "~> 0.8", only: :test},

@@ -1,4 +1,4 @@
-& {
+.resource-pagination {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -7,7 +7,7 @@
 
 .label {
   margin: 0 10px;
-  color: $color-grey;
+  color: var(--color-grey);
   font-size: 14px;
 }
 

@@ -7,7 +7,7 @@
   </p>
 </div>
 
-[Demo](http://demo.accent.reviews) • [Website](https://www.accent.reviews) • [GraphiQL](https://www.accent.reviews/documentation)
+[Demo](http://demo.accent.reviews) • [Website](https://www.accent.reviews) • [GraphiQL](http://demo.accent.reviews/graphiql/)
 
 [![Actions Status](https://github.com/mirego/accent/workflows/CI/badge.svg)](https://github.com/mirego/accent/actions)
 [![Coverage Status](https://coveralls.io/repos/github/mirego/accent/badge.svg?branch=master)](https://coveralls.io/github/mirego/accent?branch=master) [![Join the chat at https://gitter.im/mirego/accent](https://badges.gitter.im/mirego/accent.svg)](https://gitter.im/mirego/accent?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
@@ -60,7 +60,7 @@ This will start the webserver on port 4000, migrate the database to have an up a
 - `erlang ~> 21.2`
 - `elixir ~> 1.9`
 - `postgres >= 9.4`
-- `node.js >= 8.5.0`
+- `node.js >= 10.16.0`
 - `libyaml >= 0.1.7`
 
 ## 🎛 Executing mix commands
@@ -138,18 +138,18 @@ Accent provides a default value for every required environment variable. This me
 
 Various login providers are included in Accent using Ueberauth to abstract services.
 
-| Variable                   | Default | Description                                                                                                                               |
-| -------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| `DUMMY_LOGIN_ENABLED`      | _none_  | If specified (or no other authentication configs are provided), the password-less authentication (with only the email) will be available. |
-| `GITHUB_CLIENT_ID`         | _none_  |                                                                                                                                           |
-| `GITHUB_CLIENT_SECRET`     | _none_  |                                                                                                                                           |
-| `GOOGLE_API_CLIENT_ID`     | _none_  |                                                                                                                                           |
-| `GOOGLE_API_CLIENT_SECRET` | _none_  |                                                                                                                                           |
-| `SLACK_CLIENT_ID`          | _none_  |                                                                                                                                           |
-| `SLACK_CLIENT_SECRET`      | _none_  |                                                                                                                                           |
-| `SLACK_TEAM_ID`            | _none_  |                                                                                                                                           |
-| `DISCORD_CLIENT_ID`        | _none_  |                                                                                                                                           |
-| `DISCORD_CLIENT_SECRET`    | _none_  |                                                                                                                                           |
+| Variable                   | Default | Description                                                                             |
+| -------------------------- | ------- | --------------------------------------------------------------------------------------- |
+| `DUMMY_LOGIN_ENABLED`      | _none_  | If specified, the password-less authentication (with only the email) will be available. |
+| `GITHUB_CLIENT_ID`         | _none_  |                                                                                         |
+| `GITHUB_CLIENT_SECRET`     | _none_  |                                                                                         |
+| `GOOGLE_API_CLIENT_ID`     | _none_  |                                                                                         |
+| `GOOGLE_API_CLIENT_SECRET` | _none_  |                                                                                         |
+| `SLACK_CLIENT_ID`          | _none_  |                                                                                         |
+| `SLACK_CLIENT_SECRET`      | _none_  |                                                                                         |
+| `SLACK_TEAM_ID`            | _none_  |                                                                                         |
+| `DISCORD_CLIENT_ID`        | _none_  |                                                                                         |
+| `DISCORD_CLIENT_SECRET`    | _none_  |                                                                                         |
 
 ### Email setup
 
@@ -189,9 +189,33 @@ The full check that runs in the CI environment can be executed with `./priv/scri
 
 An Heroku-compatible `app.json` makes it easy to deploy the application on Heroku.
 
-<a href="https://heroku.com/deploy">
+<a href="https://heroku.com/deploy?template=https://github.com/mirego/accent">
   <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy on Heroku" />
 </a>
+
+### Using Heroku CLI
+
+_Based on [this guide](https://devcenter.heroku.com/articles/container-registry-and-runtime#getting-started)_
+
+```
+$> heroku create
+Creating app... done, ⬢ peaceful-badlands-85887
+https://peaceful-badlands-85887.herokuapp.com/ | https://git.heroku.com/peaceful-badlands-85887.git
+
+$> heroku addons:create heroku-postgresql:hobby-dev --app peaceful-badlands-85887
+Creating heroku-postgresql:hobby-dev on ⬢ peaceful-badlands-85887... free
+Database has been created and is available
+
+$> heroku config:set FORCE_SSL=true DUMMY_LOGIN_ENABLED=true WEBAPP_URL=https://peaceful-badlands-85887.herokuapp.com --app peaceful-badlands-85887
+Setting FORCE_SSL, DUMMY_LOGIN_ENABLED, WEBAPP_URL and restarting ⬢ peaceful-badlands-85887... done
+
+$> heroku container:push web --app peaceful-badlands-85887
+=== Building web
+Your image has been successfully pushed. You can now release it with the 'container:release' command.
+
+$> heroku container:release web --app peaceful-badlands-85887
+Releasing images web to peaceful-badlands-85887... done
+```
 
 ## 🌎 Contribute
 

@@ -1,5 +1,5 @@
-& {
-  margin-top: 30px;
+.translation-comment-form {
+  margin: 30px 0;
 }
 
 .form-content {
@@ -14,7 +14,7 @@
 .error {
   display: block;
   margin-bottom: 10px;
-  color: $color-error;
+  color: var(--color-error);
   font-size: 13px;
   font-weight: bold;
 }
@@ -25,11 +25,11 @@
   padding: 10px;
   margin-right: 10px;
   width: 100%;
-  font-family: $font-primary;
+  font-family: var(--font-primary);
   font-size: 13px;
 }
 
-@media (max-width: ($screen-sm)) {
+@media (max-width: var(--screen-sm)) {
   .form-content {
     flex-direction: column;
   }

@@ -2,11 +2,11 @@
   display: block;
   text-overflow: ellipsis;
   overflow-x: hidden;
-  color: $color-true-black;
+  color: var(--text-color-normal);
   font-size: 16px;
 
   &.item-text--empty {
-    color: $color-grey;
+    color: var(--color-grey);
     font-style: italic;
   }
 }
